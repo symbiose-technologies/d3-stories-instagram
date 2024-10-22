@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Example stories set
 @available(iOS 15.0, macOS 12.0, tvOS 16.0, watchOS 10.0, *)
-public enum Stories: IStory {
+public enum Stories: IStory, CaseIterable {
     case first
     case second
     case third

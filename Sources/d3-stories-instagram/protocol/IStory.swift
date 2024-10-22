@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Interface defining story view
 @available(iOS 15.0, macOS 12.0, tvOS 16.0, watchOS 10.0, *)
-public protocol IStory: Hashable, CaseIterable {
+public protocol IStory: Hashable {
     associatedtype ViewTpl: View
 
     // MARK: - Config
@@ -36,14 +36,21 @@ public protocol IStory: Hashable, CaseIterable {
     var previous: Self { get }
 }
 
+
 public extension IStory {
     /// Default scheme
     var colorScheme: ColorScheme? { nil }
+}
 
+
+
+extension IStory where Self: CaseIterable {
+    
+    
     /// Check the position relatively the currently showing story
     /// - Parameter current: Current story
     /// - Returns: true - `self`  is before current
-    func isBefore(_ current: Self) -> Bool {
+    public func isBefore(_ current: Self) -> Bool {
         let all = Self.allCases
 
         guard let itemIdx = all.firstIndex(of: current) else {
@@ -59,7 +66,7 @@ public extension IStory {
 
     /// Get next element
     /// - Returns: previous element or current if previous does not exist
-    var next: Self {
+    public var next: Self {
         let all = Self.allCases
         let startIndex = all.startIndex
         let endIndex = all.endIndex
@@ -75,7 +82,7 @@ public extension IStory {
 
     /// Get previous element
     /// - Returns: previous element or current if previous does not exist
-    var previous: Self {
+    public var previous: Self {
         let all = Self.allCases
         let startIndex = all.startIndex
         let endIndex = all.index(all.endIndex, offsetBy: -1)
